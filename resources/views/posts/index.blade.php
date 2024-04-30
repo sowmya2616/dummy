@@ -25,14 +25,14 @@
             </div>
             <table class="table-auto w-full">
                 <thead>
-                    <tr>
+                    <p>
                         <th class="px-4 py-2">ID</th>
                         <th class="px-4 py-2">Name</th>
                         <th class="px-4 py-2">Description</th>
-                        <th class="px-4 py-2">Image</th> <!-- New column for image -->
+                        <th class="px-4 py-2">Image</th> 
                         <th class="px-4 py-2">Edit</th>
                         <th class="px-4 py-2">Delete</th>
-                    </tr>
+                    </p>
                 </thead>
                 <tbody>
                     @foreach($posts as $post)
@@ -57,6 +57,7 @@
                                     <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
                                 </form>
                             </td>
+                            
                         </tr>
                     @endforeach
                 </tbody>
