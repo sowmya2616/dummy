@@ -27,6 +27,11 @@
         </div>
         
         <div>
+            <label>Image</label>
+            <input type="file " name="name" placeholder="Image" value="{{$post->image}}" disabled />
+        </div>
+
+        <div>
             <label>Description</label>
             <input type="text" name="description" placeholder="Description" value="{{$post->description}}" />
         </div>
