@@ -17,6 +17,6 @@ class CommentController extends Controller
     $comment->comment_text = $request->input('comment_text');;
     $comment->save();
 
-    return redirect()->route ('posts.index')->with('message', 'Comment created');
+    return redirect()->route ('post.index')->with('message', 'Comment created');
     }
 }

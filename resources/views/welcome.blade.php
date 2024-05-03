@@ -30,13 +30,6 @@
     </nav>
 
     <img src="https://travelprnews.com/wp-content/uploads/2021/11/https___specials-images.forbesimg.com_imageserve_920377840_0x0.jpg" alt="NO IMAGE" width=1500px height=500px !important/>
-
-    
-
   
-
-    
-
-    
 </body>
 </html>

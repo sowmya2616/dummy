@@ -31,45 +31,75 @@
 
     <div class="container mx-auto mt-8">
         @foreach($posts as $post)
-            <div class="bg-white p-4 rounded-md shadow-md mb-4">
-                <a href="{{ route('users.show', ['id' => $post->user->id]) }}" class="text-blue-500 hover:underline">User name: {{ $post->user->name }}</a>
-                <br>
-                <a href="" class="font-semibold">Post name: {{ $post->name }}</a><br>
-                <span>Post Details: {{ $post->description }}</span>
-                <br>
-                
-                <img src="{{ asset($post->image) }}" alt="Image for {{ $post->name }}" class="mt-2 rounded-md" style="max-width: 400px;">
+        
+        <div class="bg-white p-4 rounded-md shadow-md mb-4">
+            <a href="{{ route('users.show', ['id' => $post->user->id]) }}" class="text-blue-500 hover:underline">User name: {{ $post->user->name }}</a>
+            <br>
+            <a href="" class="font-semibold">Post name: {{ $post->name }}</a><br>
+            <span>Post Details: {{ $post->description }}</span>
+            <br>
+            
+            <img src="{{ asset($post->image) }}" alt="Image for {{ $post->name }}" class="mt-2 rounded-md" style="max-width: 400px;">
 
-                <!-- Comment Form -->
-                <form action="{{ route('comment.store') }}" method="POST" class="mt-4 flex items-center">
+            <!-- Comment Form -->
+            <form action="{{ route('comment.store') }}" method="POST" class="mt-4 flex items-center">
+                @csrf
+                <input type="hidden" name="post_id" value="{{ $post->id }}"> 
+                <input type="text" name="comment_text" placeholder="Add comment..." class="border rounded-md px-2 py-1 mr-2">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-1 rounded-md">Submit</button>
+            </form>
+                
+            <div class="mt-4 flex items-center">
+                <a href="{{ route('post.edit', ['id' => $post->id]) }}" class="text-blue-500 hover:text-blue-700 mr-4">Edit</a>
+                <form method="POST" action="{{ route('post.destroy', ['id' => $post->id]) }}" class="inline">
                     @csrf
-                    <input type="hidden" name="post_id" value="{{ $post->id }}"> 
-                    <input type="text" name="comment_text" placeholder="Add comment..." class="border rounded-md px-2 py-1 mr-2">
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-1 rounded-md">Submit</button>
+                    @method('DELETE')
+                    <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
                 </form>
 
-                <div class="mt-4 flex items-center">
-                    <a href="{{ route('post.edit', ['id' => $post->id]) }}" class="text-blue-500 hover:text-blue-700 mr-4">Edit</a>
-
-                    <form method="POST" action="{{ route('post.destroy', ['id' => $post->id]) }}" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
-                    </form>
+                <!-- Like Button and Like Count -->
+                <div class="flex items-center ml-4"> 
+                    <button class="likeButton bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600" data-post-id="{{ $post->id }}">Like</button>
+                    <span class="likeCount ml-2" data-post-id="{{ $post->id }}">0 Likes</span>
                 </div>
             </div>
+
+            @foreach($post->comment as $comment)
+            <p>Comment: {{$comment->comment_text}} </p>
+            @endforeach
+        </div>
         @endforeach
     </div>
-
-    <!-- Pagination -->
-
-<div class="container mx-auto mt-8 flex justify-center">
-    <div class="inline-flex">
-        <nav>
-            {{ $posts->links() }}
-        </nav>
+    <a href="http://localhost/post/create">
+    <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Create New Post</button>
+</a>
+    <div class="container mx-auto mt-8 flex justify-center">
+        <div class="inline-flex">
+            <nav>
+                {{ $posts->links() }}
+            </nav>
+        </div>
     </div>
-</div>
+    
+
+    <script>
+        // Initialize like counts for each post
+        let likeCounts = {};
+
+        // Attach click event listener to all like buttons
+        const likeButtons = document.querySelectorAll('.likeButton');
+        likeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const postId = this.dataset.postId;
+                if (!likeCounts[postId]) {
+                    likeCounts[postId] = 0;
+                }
+                likeCounts[postId]++;
+                const likeCountElement = document.querySelector(`.likeCount[data-post-id="${postId}"]`);
+                likeCountElement.innerText = likeCounts[postId] + (likeCounts[postId] === 1 ? ' Like' : ' Likes');
+            });
+        });
+    </script>
 
 </body>
 </html>
