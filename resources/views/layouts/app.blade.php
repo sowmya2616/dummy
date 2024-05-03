@@ -27,6 +27,10 @@
                 </header>
             @endif
 
+            @if(session('message'))
+            <p><b>{{ (session('message')) }} </b></p>
+        @endif
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}

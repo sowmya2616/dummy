@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +21,6 @@
             </ul>
             @endif
         </div>
-
         <form method="post" action="{{ route('post.store') }}" class="space-y-4" enctype="multipart/form-data">
             @csrf 
             @method('post')
@@ -28,24 +28,46 @@
                 <label class="block font-semibold">Name</label>
                 <input type="text" name="name" placeholder="Name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500">
             </div>
-
             <div>
                 <label class="block font-semibold">Description</label>
                 <input type="text" name="description" placeholder="Description" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500">
             </div>
+<div>
+    
+<label class="block font-semibold">User</label>
+               
+            <select type="text" name="user_id" value="user_id" >
+
+@foreach($users as $user)
+
+    <option value="{{ $user->id }}"
+
+        @if ($user->id == old('user_id'))
+
+            selected="selected"
+
+        @endif
+
+        >{{ $user->name }}
+
+    </option>
+    
+@endforeach
+
+</select>
+</div>
 
             <div>
                 <label class="block font-semibold">Upload Image</label>
-                <input type="file" name="image" accept="image/*" onchange="previewImage(event)" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500">
-                <img id="preview" class="mt-2" style="display: none;">
-            </div>
+                <input type="file" id="image" name="image" />
 
+                <img id="preview" class="mt-2" style="">
+            </div>
             <div>
                 <input type="submit" value="Save a New Post" class="w-full px-4 py-2 bg-green-500 text-white rounded-md cursor-pointer hover:bg-green-600">
             </div>
         </form>
     </div>
-
     <script>
         function previewImage(event) {
             var reader = new FileReader();

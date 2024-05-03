@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,11 +19,11 @@
         @endif
     </div>
     
-    <form method="post" action="{{route('post.update', ['post' => $post])}}">
+    <form method="post" action="{{route('post.update', ['id' => $post->id])}}">
         @csrf 
-        @method('put')
+        @method('PUT')
         <div>
-            <label>Name</label>
+            <label>Post Name</label>
             <input type="text" name="name" placeholder="Name" value="{{$post->name}}" />
         </div>
         
@@ -30,12 +31,10 @@
             <label>Image</label>
             <input type="file " name="name" placeholder="Image" value="{{$post->image}}" disabled />
         </div>
-
         <div>
             <label>Description</label>
             <input type="text" name="description" placeholder="Description" value="{{$post->description}}" />
         </div>
-
         <div>
             <input type="submit" value="Update" />
         </div>
