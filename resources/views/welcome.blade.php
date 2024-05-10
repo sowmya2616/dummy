@@ -1,35 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TRAVELGRAM</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>Navigation Example</title>
 </head>
-<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-    <nav class="bg-white shadow dark:bg-gray-800">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="/" class="font-semibold text-xl text-gray-800 dark:text-white">TRAVELGRAM</a>
-            <div class="flex items-center space-x-4">
-                <a href="/" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 transition duration-150 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700">Home</a>
-                <a href="{{route('post.index')}}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 transition duration-150 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700">Posts</a>
-                <!-- Authentication Links -->
+<body>
+    <nav class="bg-white shadow-sm py-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <!-- Logo or Site Name -->
+            <a href="/" class="text-xl font-semibold text-black">TRAVELGRAM</a>
+            
+            <!-- Navigation Links -->
+            <ul class="flex gap-4">
+                <li>
+                    <a href=" ">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('post.index')}} ">
+                        Posts
+                    </a>
+                </li>
+          <!--      <li>
+                    <a href=" ">
+                        Contact Us
+                    </a>
+                </li>  -->
+            
+            <!-- Authentication Links -->
+    
                 @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 transition duration-150 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700">Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                            Dashboard
+                        </a> 
                     @else
-                        <a href="{{ route('login') }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 transition duration-150 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700">Log in</a>
+                        <a href="{{ route('login') }}" >
+                            Log in
+                        </a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 transition duration-150 ease-in-out hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700">Register</a>
+                            <a href="{{ route('register') }}" >
+                                Register
+                            </a>
                         @endif
                     @endauth
                 @endif
             </div>
-        </div>
+            </ul>
+      
     </nav>
 
-    <img src="https://travelprnews.com/wp-content/uploads/2021/11/https___specials-images.forbesimg.com_imageserve_920377840_0x0.jpg" alt="NO IMAGE" width=1500px height=500px !important/>
-  
+    <img src= "https://wallpapers.com/images/hd/travel-hd-4zjwrepl0mzn70nd.jpg " alt ="IMAGE">
 </body>
 </html>

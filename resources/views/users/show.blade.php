@@ -1,27 +1,27 @@
+
 <div>
     <ul>
-        <li>name:{{$user->name}}</li>
-        <li>email:{{$user->email}}</li>
+        <h3>User_name:{{$user->name}}</h3>
+        <h3>Email:{{$user->email}}</h3>
     </ul> 
-
         @foreach($user ->post as $post)
         <p>
-            Post_name:{{$post ->name}}
+            Post_Name:{{$post ->name}}
         </p>
-
         <p>
-            description:{{$post ->description}}
+            Post_Description:{{$post ->description}}
         </p>
-
         @foreach($post ->comment as $comment)
         <p>
-            comment:{{$comment ->comment_text}}
+            Comment:{{$comment ->comment_text}}
         </p>
+        @endforeach
+        @endforeach
 
-        @endforeach
-        @endforeach
+        <form method="get" action="{{ route('post.index') }}">
+            <button type="submit">Back</button>
+        </form>
+
         
-        <a href="http://localhost/posts">
-        <button >Back</button>
 </a>
 </div>

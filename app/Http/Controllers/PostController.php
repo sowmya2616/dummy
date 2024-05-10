@@ -1,31 +1,33 @@
-
 <?php
+
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
+
 class PostController extends Controller
 {
-    public function index()
-    {
-        $posts = Post::with('comment', 'user')->paginate(5);
-        return view('post.index', ['posts' => $posts]); 
+    public function index(){
+        $posts = Post::with('comment','user')->paginate(3);
+        return view('posts.index', ['posts' => $posts]);
     }
+    
     public function create()
     {
-        $users = User::orderBy('name','asc')->get();
-        return view('post.create', ['users' => $users]);
+        $users=User::orderBy('name','asc')->get();
+        return view('posts.create',['users'=>$users]);
     }
-    public function store(Request $request)
-    {
+
+    public function store(Request $request){
         $data = $request->validate([
             'name' => 'required',
-            'description' => 'nullable', 
+            'description' => 'required',
             'user_id' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Adjust the validation rules as needed
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validation rule for image
         ]);
+
         $image = 'storage/' . $request->file('image')->store('images', 'public');
         $newPost = new Post;
         $newPost->name = $data['name'];
@@ -36,28 +38,37 @@ class PostController extends Controller
         session()->flash('message', 'Post Created');
         return redirect()->route('post.index');
     }
-    public function edit($id)
+    
+    public function update(Post $post, Request $request)
     {
-        $post = Post::findOrFail($id);        
-        return view('post.edit', compact('post'));
+     
+        $data = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', 
+        ]);
+
+       
+        $post->update($data);
+    
+        return redirect(route('post.index'))->with('success', 'Post Updated Successfully!');
     }
-    public function update(Request $request, $id)
-    {
-        $post = Post::findOrFail($id);        
-        $post->name = $request->input('name');
-        $post->description = $request->input('description');
-        $this->authorize('update',$post);
-        $post->update();
-        
-        session()->flash('message', 'Post Updated Successfully');
-        return redirect()->route('post.index');
+
+    public function edit(Post $post){
+        if(auth()->id()  !== $post->user_id)
+        {
+            abort(404,"You are not authorised!!");
+        }
+        return view('posts.edit', ['post' => $post]);
     }
-    public function destroy($id)
-    {
-        $post = Post::findOrFail($id);
-        $this->authorize('update',$post);
+
+    public function destroy(Post $post){
+        if(auth()->id()  !== $post->user_id)
+        {
+            abort(404,"You are not authorised!!");
+        }
+       
         $post->delete();
-        session()->flash('message', 'Post Deleted Successfully');
-        return redirect()->route('post.index');
+        return redirect(route('post.index'))->with('success', 'Post deleted Succesfully!!!!');
     }
 }

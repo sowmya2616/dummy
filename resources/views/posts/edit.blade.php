@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Post</title>
+    <title>Document</title>
 </head>
 <body>
     <h1>Edit a Post</h1>
@@ -16,21 +15,23 @@
                 <li>{{$error}}</li>
             @endforeach
         </ul>
+
+
         @endif
     </div>
-    
-    <form method="post" action="{{route('post.update', ['id' => $post->id])}}">
+    <form method="post" action="{{route('post.update', ['post' => $post])}}">
         @csrf 
-        @method('PUT')
+        @method('put')
         <div>
-            <label>Post Name</label>
+            <label>Name</label>
             <input type="text" name="name" placeholder="Name" value="{{$post->name}}" />
         </div>
-        
+
         <div>
             <label>Image</label>
-            <input type="file " name="name" placeholder="Image" value="{{$post->image}}" disabled />
+            <input type="file" name="image" accept="image/*" disabled />
         </div>
+        
         <div>
             <label>Description</label>
             <input type="text" name="description" placeholder="Description" value="{{$post->description}}" />
